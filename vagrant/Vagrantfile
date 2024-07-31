@@ -18,7 +18,7 @@ VIRTUAL_MACHINES = [
     name: "ansiblecontroller",   # Name (and hostname) for the VM
     cpu: 2,                       # Number of vCPUs to assign it
     memory: 2048,                 # RAM in MB to assign it
-    box: Hypervisor.centos,       # Operating system to run (centos or ubuntu). Note on Apple Silicon "centos" installs Rocky Linux. They are 100% compatible
+    box: Hypervisor.centos,       # Operating system to run
   },
   {
     name: "target1",
