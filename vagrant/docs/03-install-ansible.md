@@ -53,7 +53,7 @@ Now we will make a small test project
 
 1. Test connectivity
 
-    We can now run a connectivity test by using a module called `ping`. Run the ansbile command specifying the target machine, the ping module and the inventory file
+    We can now run a connectivity test by using a module called `ping`. Run the ansible command specifying the target machine, the ping module and the inventory file
 
     ```bash
     ansible target1 -m ping -i inventory.txt
