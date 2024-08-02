@@ -28,7 +28,7 @@ Set up the required software. This instruction *replaces* the video [Demo: Setup
 
 **Install VMware Fusion**
 
-This is quite fiddly due to the fact that the Broadcom (the owners of VMware) site is like a maze. They keep moving it around therefore it is not practical to have specific instructions here, however the general gist is -
+This is quite fiddly due to the fact that the Broadcom site is like a maze (Broadcom acquired VMware at the end of 2023). They keep moving it around therefore it is not practical to have specific instructions here, however the general gist is -
 
 1. Start at https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion
 1. Select Download Fusion or Workstation - you will be redirected to a login page.

@@ -1,6 +1,6 @@
 # Build your own Ansible lab
 
-These instructions supersede those found in the appendix of this course so *ignore* those videos as you won't get far. Besides, they tell you to install CentOS 7 which no longer works. The original instructions were created before Apple Silicon Macs (M1, M2, M3) came on the scene and before CentOS 7 was withdrawn by Red Hat.
+These instructions supersede those found in the appendix of this course so *ignore* those videos as you won't get far. Besides, they tell you to install CentOS 7 which no longer works. The original instructions were created before Apple Silicon Macs (M1, M2, M3) came on the scene and before CentOS 7 was withdrawn by Red Hat. For this build we use the current version of CentOS, which is 9 and the latest version of Ansible.
 
 What is presented here will work for Windows, Intel Mac and Apple Silicon Mac.
 
