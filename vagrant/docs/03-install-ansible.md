@@ -95,3 +95,5 @@ Now we will make a small test project
 ## Additional target machine
 
 If you want a second target, then edit your copy of the Vagrantfile, and uncomment the lines [here](../Vagrantfile#L29-L34). Run `vagrant up` again to deploy the second target.
+
+Prev: [Deploy Virtual Machines](./02-deploy-vms.md)
