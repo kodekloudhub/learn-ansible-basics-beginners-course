@@ -20,7 +20,7 @@ Do all the following from your favourite terminal application
     vagrant up
     ```
 
-    Soon after the process starts, it will display a box like this. If you need to raise questions on our forums about the VM installation, you *must* copy the output from your system and include it with your message so we can help you better.
+    Soon after the process starts, it will display a box like this. If you need to raise questions on our forums about the VM installation, you *must* copy this output from your system and include it with your message so we can help you better.
 
     ```text
     ┌─────────────────────────── EXAMPLE ─────────────────────────────────┐
@@ -73,9 +73,9 @@ Do all the following from your favourite terminal application
 
 To erase all VMs, do
 
-    ```
-    vagrant destroy -f
-    ```
+```
+vagrant destroy -f
+```
 
 Next: [Install Ansible](./03-install-ansible.md)<br/>
 Prev: [Prerequisites](./01-prerequisites.md)
