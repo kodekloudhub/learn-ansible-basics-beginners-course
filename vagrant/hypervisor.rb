@@ -29,7 +29,6 @@ class Box
   end
 end
 
-
 ######################################################################################
 #
 # Hypervisor is an abstraction for the type of virtualization running on the host.
@@ -65,6 +64,21 @@ class Hypervisor
       # If there are packages to install in guest, install them
       self.provision_script vm[:packages].join(","), script: "package_install.sh"
     end
+    if vm.key?(:ports)
+      if network[:network_type] == "NAT"
+        # If port fowards defined and networking is NAT
+        vm[:ports].each do |portspec|
+          p = portspec.split(":", -1)
+          if p.length < 2
+            puts "WARNING: Invalid port forward #{portspec}. Ignored."
+          else
+            self.port_forward host: p[0], guest: p[1]
+          end
+        end
+      else
+        puts "Port Forward rules ignored for BRIDGE network. They are unnecessary."
+      end
+    end
   end
 
   def network(network:, index:)
@@ -89,16 +103,6 @@ class Hypervisor
     end
     h = Host.get
     self.provision_script network[:private_network], network[:network_type], h.gateway_addresses, script: "setup_host.sh"
-  end
-
-  # Create an interface with given IP on hypervisor's private network
-  def private_network(ip:)
-    @@node.vm.network :private_network, ip: ip
-  end
-
-  # Port forward the given guest port to given port on host
-  def port_forward(guest:, host:)
-    @@node.vm.network "forwarded_port", guest: guest, host: host
   end
 
   # Run a shell script from distro specific directort
@@ -126,17 +130,19 @@ class Hypervisor
         dnf config-manager --set-enabled crb
         dnf install -y epel-release epel-next-release
         # Install YQ
+        echo "Installing yq..."
         curl -sLo yq https://github.com/mikefarah/yq/releases/download/#{@yq_version}/yq_linux_arm64
-        chmod +x yq
-        mv yq /usr/bin/yq
+          chmod +x yq
+          mv yq /usr/bin/yq
       EOF
       return Box.new "bento/centos-stream-9-arm64", script
     end
     script = <<~EOF
       # Install YQ
+      echo "Installing yq..."
       curl -sLo yq https://github.com/mikefarah/yq/releases/download/#{@yq_version}/yq_linux_amd64
-      chmod +x yq
-      mv yq /usr/bin/yq
+        chmod +x yq
+        mv yq /usr/bin/yq
     EOF
     return Box.new "boxomatic/centos-stream-9", script
   end
@@ -148,9 +154,10 @@ class Hypervisor
       export DEBIAN_FRONTEND=noninteractive
       apt update
       apt-get install -y jq
+      echo "Installing yq..."
       curl -sLo yq https://github.com/mikefarah/yq/releases/download/#{@yq_version}/yq_linux_#{arch}
-      chmod +x yq
-      mv yq /usr/bin/yq
+        chmod +x yq
+        mv yq /usr/bin/yq
     EOF
     if OS.arm?
       return Box.new "bento/ubuntu-22.04-arm64", script
@@ -164,6 +171,13 @@ class Hypervisor
 
   def bridge_adapter
     ""
+  end
+
+  private
+
+  # Port forward the given guest port to given port on host
+  def port_forward(guest:, host:)
+    @@node.vm.network "forwarded_port", guest: guest, host: host
   end
 end
 

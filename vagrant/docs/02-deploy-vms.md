@@ -69,6 +69,50 @@ Do all the following from your favourite terminal application
 
     1. Enter `exit` command twice to retun to laptop command prompt.
 
+## Changing the VM configuration
+
+You can change the VM configuration, or even run ubuntu instead of CentOS with some simple edits to your local copy of the Vagrantfile. Make these changes before deploying the VMs, or after first deleting them (see below) if they are running.
+
+It is all done by editing [this section](../Vagrantfile#L16-L30).
+
+* To add a VM simply add a new VM definition to this list, e.g.
+
+    ```ruby
+    {
+        name: "target2",
+        cpu: 2,
+        memory: 2048,
+        box: Hypervisor.centos,
+    },
+    ```
+
+* To remove a VM, simply delete the VM definition block.
+* To change CPU or memory for a VM, edit the values at `cpu:` and `memory:` in the VM definition. Note that if the sum of `memory:` for all the machines you have added exceeds the total memory of your system minus 2GB (to allow space for Windows/MacOS to run), then you will get an error. You can overprovision virtual CPUs past the number of CPUs on your laptop although the VMs might run slowly. You cannot request more memory than the laptop has installed.
+* To run Ubuntu, change the `box:` setting to `Hypervisor.ubuntu`
+* To change the hostname of a VM, edit the `name:` setting to the new name.
+* To add a port-forward so you can e.g. browse an nginx server you may create a playbook for, simply add a `ports` property to the VM definition, so it might look like the following. This would allow you to browse `http://localhost:8080` to see the nginx page:
+
+    ```ruby
+    {
+        name: "target2",
+        cpu: 2,
+        memory: 2048,
+        box: Hypervisor.centos,
+        ports: [
+            "8080:80",
+        ],
+    },
+    ```
+
+    Multiple ports can be added in the list, e.g. you also have a MySQL
+
+    ```ruby
+    ports: [
+        "8080:80",
+        "3306:3306",
+    ],
+    ```
+
 ## Deleting the VMs
 
 To erase all VMs, do
