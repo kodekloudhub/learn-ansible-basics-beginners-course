@@ -108,7 +108,7 @@ class Hypervisor
   # Run a shell script from distro specific directort
   def provision_script(*args, script:)
     s = ""
-    if File.exists?(File.join(@@workdir, "linux", script))
+    if file_exists?(File.join(@@workdir, "linux", script))
       s = File.join(@@workdir, "linux", script)
     else
       raise Exception.new "Provisioner script not found: #{script}"
@@ -119,6 +119,14 @@ class Hypervisor
       end
     else
       @@node.vm.provision script, type: "shell", path: s
+    end
+  end
+
+  def file_exists?(path)
+    if RUBY_VERSION.to_f >= 3.0
+      File.exist?(path) # Use the modern method
+    else
+      File.exists?(path) # Use the older method for compatibility
     end
   end
 
