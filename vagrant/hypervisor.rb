@@ -143,6 +143,10 @@ class Hypervisor
           chmod +x yq
           mv yq /usr/bin/yq
       EOF
+
+      if OS.apple_silicon?
+        return Box.new "almalinux/9", script
+      end
       return Box.new "bento/centos-stream-9-arm64", script
     end
     script = <<~EOF

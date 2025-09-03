@@ -169,7 +169,7 @@ class AppleSiliconHost < MacHost
   end
 
   def hypervisor_exists?
-    Dir.exists?("/Applications/VMware Fusion.app")
+    Dir.exist?("/Applications/VMware Fusion.app")
   end
 end
 
