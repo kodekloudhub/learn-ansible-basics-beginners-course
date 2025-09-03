@@ -136,8 +136,9 @@ class Hypervisor
       script = <<~EOF
         # Install EPEL
         dnf config-manager --set-enabled crb
-        dnf install -y epel-release epel-next-release
         # Install YQ
+        dnf install -y epel-release
+        dnf install -y epel-next-release
         echo "Installing yq..."
         curl -sLo yq https://github.com/mikefarah/yq/releases/download/#{@yq_version}/yq_linux_arm64
           chmod +x yq
@@ -145,7 +146,7 @@ class Hypervisor
       EOF
 
       if OS.apple_silicon?
-        return Box.new "almalinux/9", script
+        return Box.new "bento/rockylinux-9", script
       end
       return Box.new "bento/centos-stream-9-arm64", script
     end
